@@ -17,17 +17,17 @@ public class Circle : MonoBehaviour
     }
 
     void OnMouseDown(){
+        // get gameobject with tag Board
+        GameObject board = GameObject.FindWithTag("Board");
+        NeutreekoLogic boardScript = board.GetComponent<NeutreekoLogic>();
+
         // find all objects with tag Circle and destroy them
         GameObject[] circles = GameObject.FindGameObjectsWithTag("Circle");
         foreach (GameObject circle in circles){
             Destroy(circle);
         }
 
-        // get gameobject with tag Board
-        GameObject board = GameObject.FindWithTag("Board");
         // get script from board
-        NeutreekoLogic boardScript = board.GetComponent<NeutreekoLogic>();
-        Debug.Log(this.gameObject);
         boardScript.makeMove(this.gameObject);
     }
 }

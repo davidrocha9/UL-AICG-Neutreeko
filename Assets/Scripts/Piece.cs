@@ -16,17 +16,34 @@ public class Piece : MonoBehaviour
         
     }
 
-    void OnMouseDown(){
+    void OnMouseDown()
+    {
         // find all objects with tag Circle and destroy them
         GameObject[] circles = GameObject.FindGameObjectsWithTag("Circle");
         foreach (GameObject circle in circles){
             Destroy(circle);
         }
-
+        
         // get gameobject with tag Board
         GameObject board = GameObject.FindWithTag("Board");
         // get script from board
         NeutreekoLogic boardScript = board.GetComponent<NeutreekoLogic>();
+
+        // use board to get playerturn
+        int playerTurn = boardScript.getPlayerTurn();
+
+        // get gameobject tag
+        string tag = this.gameObject.tag;
+
+        Debug.Log(tag);
+        Debug.Log(playerTurn);
+
+        // if seletedpiece is red and playerturn is 1 or selectedpiece is black and playerturn is 0, then print "not your turn" and return
+        if ((tag == "RedPiece" && playerTurn == 1) || (tag == "BlackPiece" && playerTurn == 0)){
+            Debug.Log("Not your turn");
+            return;
+        }
+
         boardScript.generatePossibleMoves(this.gameObject);
     }
 

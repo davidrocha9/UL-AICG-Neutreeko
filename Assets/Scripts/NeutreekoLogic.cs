@@ -9,6 +9,7 @@ public class NeutreekoLogic : MonoBehaviour
     public GameObject circle, selectedPiece;
     private int[,] board = new int[5,5];
     private List<List<int>> possibleMoves = new List<List<int>>();
+    private int playerTurn = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,10 @@ public class NeutreekoLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public int getPlayerTurn(){
+        return playerTurn;
     }
 
     void updateBoard(GameObject piece)
@@ -98,6 +103,7 @@ public class NeutreekoLogic : MonoBehaviour
     {
         // make selectedPiece position same as circle position
         selectedPiece.transform.position = circle.transform.position;
+        playerTurn = (playerTurn + 1) % 2;
     }
 
     List<float> getInvCoordsMatrix(List<int> coords)

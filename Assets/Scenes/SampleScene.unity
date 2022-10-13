@@ -395,6 +395,7 @@ MonoBehaviour:
   b2: {fileID: 0}
   b3: {fileID: 0}
   circle: {fileID: 7869951160417842867, guid: b881624206a11b34397164a5326da09f, type: 3}
+  selectedPiece: {fileID: 0}
 --- !u!1001 &639966034
 PrefabInstance:
   m_ObjectHideFlags: 0

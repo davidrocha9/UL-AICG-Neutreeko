@@ -6,7 +6,7 @@ public class NeutreekoLogic : MonoBehaviour
 {
     public GameObject r1, r2, r3;
     public GameObject b1, b2, b3;
-    public GameObject circle;
+    public GameObject circle, selectedPiece;
     private int[,] board = new int[5,5];
     private List<List<int>> possibleMoves = new List<List<int>>();
     
@@ -21,8 +21,10 @@ public class NeutreekoLogic : MonoBehaviour
     {
     }
 
-    void updateBoard()
+    void updateBoard(GameObject piece)
     {
+        selectedPiece = piece;
+        
         // get all gameobjects with tag RedPiece and BlackPiece
         GameObject[] redPieces = GameObject.FindGameObjectsWithTag("RedPiece");
         GameObject[] blackPieces = GameObject.FindGameObjectsWithTag("BlackPiece");
@@ -58,7 +60,7 @@ public class NeutreekoLogic : MonoBehaviour
     
     public void generatePossibleMoves(GameObject piece)
     {
-        updateBoard();
+        updateBoard(piece);
         // clear possibleMoves list
         possibleMoves.Clear();
 
@@ -90,6 +92,12 @@ public class NeutreekoLogic : MonoBehaviour
             // instantiate circle with coords x, y, z
             Instantiate(circle, new Vector3(x, y, z), Quaternion.identity);
         }
+    }
+
+    public void makeMove(GameObject circle)
+    {
+        // make selectedPiece position same as circle position
+        selectedPiece.transform.position = circle.transform.position;
     }
 
     List<float> getInvCoordsMatrix(List<int> coords)

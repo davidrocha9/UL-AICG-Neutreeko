@@ -35,12 +35,8 @@ public class Piece : MonoBehaviour
         // get gameobject tag
         string tag = this.gameObject.tag;
 
-        Debug.Log(tag);
-        Debug.Log(playerTurn);
-
         // if seletedpiece is red and playerturn is 1 or selectedpiece is black and playerturn is 0, then print "not your turn" and return
         if ((tag == "RedPiece" && playerTurn == 1) || (tag == "BlackPiece" && playerTurn == 0)){
-            Debug.Log("Not your turn");
             return;
         }
 

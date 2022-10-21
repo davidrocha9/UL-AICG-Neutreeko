@@ -26,6 +26,8 @@ public class NeutreekoLogic : MonoBehaviour
         return playerTurn;
     }
 
+    
+
     void updateBoard(GameObject piece)
     {
         selectedPiece = piece;
@@ -99,11 +101,71 @@ public class NeutreekoLogic : MonoBehaviour
         }
     }
 
+    void checkWin() {
+        // get all gameobjects with tag RedPiece and BlackPiece
+        GameObject[] redPieces = GameObject.FindGameObjectsWithTag("RedPiece");
+        GameObject[] blackPieces = GameObject.FindGameObjectsWithTag("BlackPiece");
+
+        List<List<int>> redPiecesCoords = new List<List<int>>();
+        List<List<int>> blackPiecesCoords = new List<List<int>>();
+
+        foreach (GameObject _piece in redPieces){
+            List<int> coords = getCoordsMatrix(_piece);
+            redPiecesCoords.Add(coords);
+        }
+
+        foreach (GameObject _piece in blackPieces){
+            List<int> coords = getCoordsMatrix(_piece);
+            blackPiecesCoords.Add(coords);
+        }
+
+        if (checkRowColDiag(redPiecesCoords) != 1)
+        {
+            if (checkRowColDiag(blackPiecesCoords) == 1)
+                Debug.Log("Black wins!");
+            }
+        else
+            Debug.Log("Red wins!");
+    }
+
+    public int checkRowColDiag(List<List<int>> pieces)
+    {
+        // sort redPiecesCoords in ascending order
+        pieces.Sort((a, b) => a[0].CompareTo(b[0]));
+        
+        if (pieces[0][0] + 1 == pieces[1][0] && pieces[1][0] + 1 == pieces[2][0])
+        {
+            if (pieces[0][1] == pieces[1][1] && pieces[1][1] == pieces[2][1])
+                return 1;
+            
+            // sort redPiecesCoords in ascending order
+            pieces.Sort((a, b) => a[1].CompareTo(b[1]));
+
+            if (pieces[0][1] + 1 == pieces[1][1] && pieces[1][1] + 1 == pieces[2][1])
+                return 1;
+        }
+
+        if (pieces[0][1] == pieces[1][1] && pieces[1][1] == pieces[2][1]) {
+            if (pieces[0][0] + 1 == pieces[1][0] && pieces[1][0] + 1 == pieces[2][0])
+                return 1;
+        }
+
+        // sort redPiecesCoords in ascending order
+        pieces.Sort((a, b) => a[1].CompareTo(b[1]));
+
+        if (pieces[0][0] == pieces[1][0] && pieces[1][0] == pieces[2][0])
+            if (pieces[0][1] + 1 == pieces[1][1] && pieces[1][1] + 1 == pieces[2][1])
+                return 1;
+
+        return 0;
+    }
+
     public void makeMove(GameObject circle)
     {
         // make selectedPiece position same as circle position
         selectedPiece.transform.position = circle.transform.position;
         playerTurn = (playerTurn + 1) % 2;
+        checkWin();
     }
 
     List<float> getInvCoordsMatrix(List<int> coords)
